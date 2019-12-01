@@ -11,7 +11,7 @@ def rta_frecuencia(num,den, title="BODE"):
 	plt.xlabel('Frecuencia normalizada x/pi')
 	plt.show()
 
-def filtrar(num, den, entrada, title="SALIDA", usar_plot=False, intervalo=None, cantidad_retraso=0):
+def filtrar(num, den, entrada, title="SALIDA", usar_plot=False, intervalo=None, cantidad_retraso=0, plot_results=True):
 	respuesta = signal.lfilter(num,den,entrada)
 	tiempo = np.r_[0:len(entrada)]
 
@@ -22,19 +22,21 @@ def filtrar(num, den, entrada, title="SALIDA", usar_plot=False, intervalo=None, 
 		respuesta = np.concatenate((respuesta, np.zeros(cantidad_retraso)))
 		respuesta = respuesta[cantidad_retraso:]
 
-	if intervalo is not None:
-		inicio = intervalo[0]
-		fin = intervalo[1]
-		plot_y = respuesta[inicio:fin]
-		plot_x = tiempo[inicio:fin]
-	
-	if not usar_plot:
-		plt.stem(plot_x,plot_y,'r')
-	else:
-		plt.plot(plot_x, plot_y)
+	if plot_results:
+		if intervalo is not None:
+			inicio = intervalo[0]
+			fin = intervalo[1]
+			plot_y = respuesta[inicio:fin]
+			plot_x = tiempo[inicio:fin]
+		
+		if not usar_plot:
+			plt.stem(plot_x,plot_y,'r')
+		else:
+			plt.plot(plot_x, plot_y)
 
-	plt.title(title)
-	plt.show()
+		plt.title(title)
+		
+		plt.show()
 	return respuesta
 
 
