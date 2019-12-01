@@ -7,20 +7,19 @@ from scipy.fftpack import fftshift
 
 __datamat = scp.loadmat('../data/103m.mat')
 __datamat_y = __datamat['y']
-__z = np.array(__datamat_y)[0]
+__z = np.array(__datamat_y)[0]/200
 
-ecg_original = __z - __z.mean()
+ecg = __z - __z.mean()
 
-ecg = ecg_original/200
+marcas = np.loadtxt('../data/marcas.txt')
 
-def plotear(xs, color=None, show=True):
+def plotear(xs, color=None):
 	#plt.figure()
 	if color:
 		plt.plot(xs,color=color)
 	else:
 		plt.plot(xs)
-	if show:
-		plt.show()
+	plt.show()
 	return
 
 if __name__ == '__main__':

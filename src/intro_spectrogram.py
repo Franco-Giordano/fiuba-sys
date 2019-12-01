@@ -28,7 +28,7 @@ mod = 1000*np.cos(2*np.pi*0.25*time) # moduladora (se suma en el argumento de ca
 carrier = amp*np.sin(2*np.pi*3e3*time + mod)
 noise = np.random.normal(scale=np.sqrt(noise_power), size=time.shape)
 noise *= np.exp(-time/5)
-x = carrier + noise
+x = carrier + noiselog10
 
 '''
 Compute and plot the spectrogram
