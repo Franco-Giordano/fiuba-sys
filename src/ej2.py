@@ -7,13 +7,13 @@ import math
 unQRS = ecg[312:329]
 
 fft = fft(unQRS,2048)  # fft de 2048 puntos
-freq = np.linspace(-math.pi, math.pi, len(fft))
+freq = np.linspace(-100, 100, len(fft))
 response = 20 * np.log10(np.abs(fftshift(fft/abs(fft).max())))
 
 sinDB = abs(fftshift(fft))
 
 plt.title("Respuesta en frecuencia de un complejo QRS")
-plt.xlabel("Ω")
+plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Amplitud")
 plt.plot(freq,sinDB)
 

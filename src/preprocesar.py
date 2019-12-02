@@ -8,11 +8,7 @@ def preprocesar(senial, dbs_ruido=None):
 
 	if dbs_ruido is not None:
 
-		desvio = np.sqrt(np.var(senial_entrada) / (10**(dbs_ruido/10)))
-
-		ruido = np.random.normal(scale=desvio, size=len(senial_entrada))
-
-		senial_entrada += ruido
+		senial_entrada = agregarRuido(senial_entrada, dbs_ruido)
 
 	b,a = [0 for i in range(13)], [0 for i in range(3)]
 
@@ -56,3 +52,12 @@ def preprocesar(senial, dbs_ruido=None):
 
 	return integrada
 
+def agregarRuido(senial_entrada, dbs_ruido):
+
+	desvio = np.sqrt(np.var(senial_entrada) / (10**(dbs_ruido/10)))
+
+	ruido = np.random.normal(scale=desvio, size=len(senial_entrada))
+
+	senial_entrada += ruido
+
+	return senial_entrada

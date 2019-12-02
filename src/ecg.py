@@ -13,13 +13,21 @@ ecg_original = __z - __z.mean()
 
 ecg = ecg_original/200
 
-def plotear(xs, color=None, show=True):
+def plotear(xs, color=None, show=True, label=''):
 	#plt.figure()
-	if color:
-		plt.plot(xs,color=color)
+	if label:
+		if color:
+			plt.plot(xs,color=color, label=label)
+		else:
+			plt.plot(xs,label=label)
 	else:
-		plt.plot(xs)
+		if color:
+			plt.plot(xs,color=color)
+		else:
+			plt.plot(xs)
+		
 	if show:
+		plt.legend()
 		plt.show()
 	return
 

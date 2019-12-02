@@ -1,9 +1,9 @@
 from ecg import *
 from qrs_detection import qrs_detection
 
-def evaluar_performance(senial_entrada, marcas_reales, print_header=""):
+def evaluar_performance(senial_entrada, marcas_reales, print_header="", find_peaks_distance=20):
 
-	peaks_index, diccionario = signal.find_peaks(senial_entrada,height=0,distance=20)
+	peaks_index, diccionario = signal.find_peaks(senial_entrada,height=0,distance=find_peaks_distance)
 	peaks_altura = diccionario['peak_heights']
 
 	peaks_absolutos = np.zeros(len(senial_entrada))
@@ -19,6 +19,8 @@ def evaluar_performance(senial_entrada, marcas_reales, print_header=""):
 	marcas_mias = [i for i in range(len(peaks_final)) if peaks_final[i] != 0]
 
 	cant_marcas_bien, cant_falsos_negativos = 0, 0
+
+	# CORREGIR + - 10 PARA 360 HZ!
 
 	for m in marcas_reales:
 		if np.count_nonzero(peaks_final[int(m)-10:int(m)+10]) > 0: 	# hay al menos una marca dentro del QRS!

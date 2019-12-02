@@ -1,8 +1,8 @@
-from preprocesar import preprocesar
+from preprocesar import agregarRuido
 from ecg import *
 import math
 from ej5 import filtrar
-
+from ej12 import evaluar_performance
 
 def decimar_y_expandir(entrada, puntos_sinc=2000):
 
@@ -79,8 +79,8 @@ salida_hl = np.concatenate((salida_hl, np.zeros(cantidad_retraso)))
 salida_hl = salida_hl[cantidad_retraso:]
 
 plt.title("ECG vs HL")
-plotear(ecg_remuestreado[100:800], show=False)
-plotear(salida_hl[100:800])
+plotear(ecg_remuestreado[100:800], show=False, label="ECG")
+plotear(salida_hl[100:800], label="HL")
 
 
 # ==================== HH =======================
@@ -135,3 +135,43 @@ plt.title("HH vs HD")
 plotear(salida_hh[100:800], show=False)
 plotear(salida_hd[100:800])
 
+
+# ================== CUADRADO ========================
+
+salida_cuad = np.power(salida_hd, 2)
+
+plt.title("HD vs CUADRADO")
+plotear(salida_hd[100:800], show=False)
+plotear(salida_cuad[100:800])
+
+
+# ================== INTEGRADOR ========================
+
+N = 36
+
+coef_num = np.ones(N)
+coef_den = [N]
+
+# no hay que remuestrear
+salida_int = filtrar(coef_num, coef_den, salida_cuad, plot_results=False, cantidad_retraso=N//2)
+
+plt.title("CUADRADO vs INTEGRADA")
+plotear(salida_cuad[100:800], show=False)
+plotear(salida_int[100:800])
+
+
+
+# =================== EVALUAR PERFORMANCE ===============
+
+marcas_reales = np.loadtxt("../data/marcas.txt")
+
+# ajustar a 360 Hz 
+marcas_reales = [9/5 * m for m in marcas_reales]
+
+evaluar_performance(salida_int, marcas_reales, find_peaks_distance=36, print_header="========= SIN RUIDO =========")
+
+evaluar_performance(agregarRuido(salida_int, 30), marcas_reales, find_peaks_distance=36, print_header="========= 30 DBS RUIDO =========")
+
+evaluar_performance(agregarRuido(salida_int, 20), marcas_reales, find_peaks_distance=36, print_header="========= 20 DBS RUIDO =========")
+
+evaluar_performance(agregarRuido(salida_int, 10), marcas_reales, find_peaks_distance=36, print_header="========= 10 DBS RUIDO =========")

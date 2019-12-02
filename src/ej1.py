@@ -1,11 +1,6 @@
 from ecg import *
 
 
-print(len(marcas), marcas)
-
-delta = [marcas[i] - marcas[i-1] for i in range(1, len(marcas[:1000]))]
-print("DELTA PROM:",sum(delta)/len(delta))
-
 # for m in marcas[:1000]:
 # 	plt.axvline(x=m, color='red')
 
@@ -13,28 +8,29 @@ print(ecg)
 
 
 fig, ax = plt.subplots()
-plt.plot(ecg)
+tiempo = np.linspace(0, len(ecg)/200, len(ecg))
+plt.plot(tiempo,ecg)
+plt.axis([100/200, 800/200, -1, 1.5])
 
-ax.axvline(x=294, ymin=0.0, ymax=1.0, color='r', ls=':')	#P
+ax.axvline(x=294/200, ymin=0.0, ymax=1.0, color='r', ls=':')	#P
 
-ax.axvline(x=314, ymin=0.0, ymax=1.0, color='r', ls=':')	#Q
+ax.axvline(x=314/200, ymin=0.0, ymax=1.0, color='r', ls=':')	#Q
 
-ax.axvline(x=320, ymin=0.0, ymax=1.0, color='r', ls=':')	#R
+ax.axvline(x=320/200, ymin=0.0, ymax=1.0, color='r', ls=':')	#R
 
-ax.axvline(x=324, ymin=0.0, ymax=1.0, color='r', ls=':')	#S
+ax.axvline(x=324/200, ymin=0.0, ymax=1.0, color='r', ls=':')	#S
 
-ax.axvline(x=369, ymin=0.0, ymax=1.0, color='r', ls=':')	#T
+ax.axvline(x=369/200, ymin=0.0, ymax=1.0, color='r', ls=':')	#T
 
-ax.axvline(x=410, ymin=0.0, ymax=1.0, color='r', ls=':')	#U
-
-
+ax.axvline(x=410/200, ymin=0.0, ymax=1.0, color='r', ls=':')	#U
 
 
 
-plt.axis([100, 800, -1, 1.5])
-plt.title("Un ciclo caracteristico del ECG")
+
+
+plt.title("Un ciclo QRS")
 plt.ylabel("Milivolt [mV]")
-plt.xlabel("Numero de muestra")
+plt.xlabel("Tiempo [s]")
 
 
 plt.show()

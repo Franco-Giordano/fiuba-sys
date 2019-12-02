@@ -12,8 +12,9 @@ def rta_frecuencia(num,den, title="BODE"):
 	plt.show()
 
 def filtrar(num, den, entrada, title="SALIDA", usar_plot=False, intervalo=None, cantidad_retraso=0, plot_results=True):
+	FREC = 200
 	respuesta = signal.lfilter(num,den,entrada)
-	tiempo = np.r_[0:len(entrada)]
+	tiempo = np.linspace(0, len(entrada)/FREC, len(entrada))
 
 	plot_x = tiempo
 	plot_y = respuesta
@@ -60,6 +61,8 @@ if __name__ == '__main__':
 	plt.plot(np.real(num),np.imag(num),'ob',markerfacecolor='None', markersize=6)
 	plt.plot(np.real(den),np.imag(den),'Xb',markersize=10, color='red'),plt.grid()
 	plt.title('Polos y ceros de HL(z)'),plt.show()
+
+
 
 	rta_frecuencia(b,a, title='Respuesta en frecuencia de HL(z)')
 
