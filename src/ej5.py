@@ -43,7 +43,7 @@ def filtrar(num, den, entrada, title="SALIDA", usar_plot=False, intervalo=None, 
 
 if __name__ == '__main__':
 
-	b,a = [0 for i in range(13)], [0 for i in range(3)]
+	b,a = [0 for i in range(13)], [0 for i in range(13)]
 
 	b[0] = 1
 	b[6] = -2
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 	salida_hl = filtrar(b,a,ecg,title="Señal ECG filtrada por HL(z)", usar_plot=True, intervalo=[100,800], cantidad_retraso=5)
 
 
-	b,a = [0 for i in range(33)], [0 for i in range(2)]
+	b,a = [0 for i in range(33)], [0 for i in range(33)]
 
 	b[0] = -1/32
 	b[16] = 1 

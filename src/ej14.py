@@ -122,9 +122,11 @@ impulso = np.zeros(36); impulso[0] = 1
 
 rta_imp = filtrar(coef_num, coef_den, impulso, plot_results=False, cantidad_retraso=0)
 
+rta_imp_remuestreada = decimar_y_expandir(rta_imp)
+
 salida_hd = np.convolve(salida_hh, rta_imp)
 
-cantidad_retraso = 2 # 
+cantidad_retraso = 2 # 2 * 9/5 = 3.6
 
 salida_hd = np.concatenate((salida_hd, np.zeros(cantidad_retraso)))
 salida_hd = salida_hd[cantidad_retraso:]
@@ -147,7 +149,7 @@ plotear(salida_cuad[100:800])
 
 # ================== INTEGRADOR ========================
 
-N = 36
+N = 45
 
 coef_num = np.ones(N)
 coef_den = [N]

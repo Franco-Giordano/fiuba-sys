@@ -22,13 +22,15 @@ def evaluar_performance(senial_entrada, marcas_reales, print_header="", find_pea
 
 	# CORREGIR + - 10 PARA 360 HZ!
 
+	tolerancia = find_peaks_distance//2
+
 	for m in marcas_reales:
-		if np.count_nonzero(peaks_final[int(m)-10:int(m)+10]) > 0: 	# hay al menos una marca dentro del QRS!
+		if np.count_nonzero(peaks_final[int(m)-tolerancia:int(m)+tolerancia]) > 0: 	# hay al menos una marca dentro del QRS!
 			cant_marcas_bien += 1
 		else:												# no hay ninguna
 			cant_falsos_negativos += 1
 
-		if m < 10 or (m+10) >= len(peaks_final):
+		if m < tolerancia or (m+tolerancia) >= len(peaks_final):
 			raise ValueError('Accediendo a indices invalidos')
 
 	# DEBERIA CUMPLIRSE QUE:
